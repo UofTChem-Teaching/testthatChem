@@ -1,0 +1,47 @@
+
+# The Guide for the package "testthat-chem"
+R package to support automated testing in courses.
+
+## Instruction for the package installation and loading
+
+	install.packages("devtools")
+	devtools::install_github("UofTChem-Teaching/testthat-chem")
+
+## Instruction for running tests on .R /.Rmd
+
+### When tests are running on .R
+	
+	library(testthat)
+	library(testthat-chem)
+	library(devtools)
+### When tests are running on .Rmd
+	
+	library(testthat)
+	library(testthat-chem)
+	library(devtools)
+	library("knitr")
+	knit("../xxx.Rmd")
+
+## Specific instructions for different machines 
+
+### For Windows Machine
+You might encounter errors like the following:
+1.Error: package or namespace load failed for ‘rlang’:
+ .onLoad failed in loadNamespace() for 'rlang', details:
+  call: NULL
+  error: The rlang package is not properly installed.
+The DLL version does not correspond to the package version.
+Please update rlang to the latest version.
+
+2.Error: package or namespace load failed for ‘mice’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+namespace ‘rlang’ 0.x.x is already loaded, but >= x.x.x is required
+
+Delete the installed rlang package and force R to install the specific version should fix that:
+
+	install.packages("https://cran.r-project.org/src/contrib/Archive/rlang/rlang_1.0.3.tar.gz", repo=NULL, type="source")
+
+### For Mac OS
+No issues raised
+
+### For Cloud
+No issues raised
