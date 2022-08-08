@@ -1,11 +1,11 @@
 
-# The Guide for the package "testthat-chem"
+# The Guide for the package "testthatChem"
 R package to support automated testing in courses.
 
 ## Instruction for the package installation and loading
 
 	install.packages("devtools")
-	devtools::install_github("UofTChem-Teaching/testthat-chem")
+	devtools::install_github("UofTChem-Teaching/testthatChem")
 
 ## Instruction for running tests on .R /.Rmd
 
@@ -16,12 +16,12 @@ R package to support automated testing in courses.
 ### When tests are running on .R
 	
 	library(testthat)
-	library(testthat-chem)
+	library(testthatChem)
 	library(devtools)
 ### When tests are running on .Rmd
 	
 	library(testthat)
-	library(testthat-chem)
+	library(testthatChem)
 	library(devtools)
 	library("knitr")
 	knit("../xxx.Rmd")

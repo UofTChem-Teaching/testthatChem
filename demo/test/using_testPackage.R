@@ -3,6 +3,8 @@
 
 library("knitr")
 knit("../demo_keys.Rmd")
+library(testthat)
+library(testthatChem)
 
 
 ############################################################################
@@ -12,12 +14,12 @@ my_data_list <-
   list(
     "chemical" = chemical,
     "chemical2" = chemical2,
-    "compTox" = compTox,
-    "compTox2" = compTox2,
+    "var_Tox" = var_Tox,
+    "var_Tox2" = var_Tox2,
     "InChiKeys" = InChiKeys,
     "InChiKeys2" = InChiKeys2,
-    "PubChem_IDs" = PubChem_IDs,
-    "PubChem_IDs2" = PubChem_IDs2,
+    "IDs" = IDs,
+    "IDs2" = IDs2,
     "results" = results,
     "results2" = results2,
     "resultsCombined" = resultsCombined,
@@ -51,7 +53,7 @@ for (i in seq_along(my_data_list)) {
       )
     }
   }
-  if (name == "compTox" || name == "compTox2") {
+  if (name == "var_Tox" || name == "var_Tox2") {
     test_column_names(
       data,
       c(
@@ -71,11 +73,11 @@ for (i in seq_along(my_data_list)) {
     test_column_type(data, "log_KOW", "double", name = name)
     test_column_type(data, "log_KAW", "double", name = name)
     test_column_type(data, "log_KOC", "double", name = name)
-    if (name == "compTox") {
+    if (name == "var_Tox") {
       test_entry(data, "Group", 10, "Group1", name = name)
       test_entry(data, "CmpdID", 10, 10, name = name)
     }
-    if (name == "compTox2") {
+    if (name == "var_Tox2") {
       test_entry(data, "Group", 10, "Group2", name = name)
       test_entry(data, "CmpdID", 10, 10, name = name)
     }
@@ -94,7 +96,7 @@ for (i in seq_along(my_data_list)) {
     test_column_type(data, "InChIKey", "character", name = name)
     test_NA(data, "CID", FALSE, name = name)
   }
-  if (name == "PubChem_IDs" || name == "PubChem_IDs2") {
+  if (name == "IDs" || name == "IDs2") {
     test_column_names(data, c(as.character('query'), as.character('cid')), name = name)
     test_dimensions(data, c(as.integer(10), as.integer(2)), name = name)
     test_column_type(data, "query", "character", name = name)

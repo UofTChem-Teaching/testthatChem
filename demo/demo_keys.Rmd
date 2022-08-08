@@ -9,7 +9,7 @@ Create a new RStudio Project for Tutorial X and copy this .Rmd file into it.
 
 ## Packages
 =
-Install the required packages *webchem* and *tidyverse*. We will use *webchem* to quickly access the online chemical database **PubChem** and convert our compound list into a format recognized by CompTox.
+Install the required packages *webchem* and *tidyverse*. We will use *webchem* to quickly access the online chemical database **PubChem** and convert our compound list into a format recognized by var_Tox.
 
 ```{r packages, message = FALSE, error = TRUE}
 if(!require("webchem")) install.packages("webchem") #Only runs if the package is not already installed on your device.
@@ -95,34 +95,34 @@ cmpdList5 <- c( #Alkyl OPFRs
 ```
 
 
-The code below will convert the SMILES strings into a search format recognized by the CompTox database. After running this block you should have two text files in your project folder.
+The code below will convert the SMILES strings into a search format recognized by the var_Tox database. After running this block you should have two text files in your project folder.
 
 ```{r export}
 chemical <- tibble(SMILES = cmpdList1) #Converts the input data into a 1-column tibble (tidy table)
 
-PubChem_IDs <- get_cid(chemical$SMILES, from = "smiles") #Obtains the PubChem database IDs for each input compound
+IDs <- get_cid(chemical$SMILES, from = "smiles") #Obtains the PubChem database IDs for each input compound
 
-InChiKeys <- pc_prop(PubChem_IDs$cid, properties = c("InChIKey", "MolecularFormula")) %>% #Obtains the International Chemical Identifier Key (InChIKey) for each PubChem ID
+InChiKeys <- pc_prop(IDs$cid, properties = c("InChIKey", "MolecularFormula")) %>% #Obtains the International Chemical Identifier Key (InChIKey) for each PubChem ID
   mutate(CID = as.character(CID))
 
-write_lines(InChiKeys$InChIKey, file = "copy_into_CompTox1.txt") #Outputs to a tab-delimited text file. Feel free to rename this file.
+write_lines(InChiKeys$InChIKey, file = "copy_into_var_Tox1.txt") #Outputs to a tab-delimited text file. Feel free to rename this file.
 
 
 
 chemical2 <- tibble(SMILES = cmpdList2) 
 
-PubChem_IDs2 <- get_cid(chemical2$SMILES, from = "smiles") 
+IDs2 <- get_cid(chemical2$SMILES, from = "smiles") 
 
-InChiKeys2 <- pc_prop(PubChem_IDs2$cid, properties = c("InChIKey", "MolecularFormula")) %>% 
+InChiKeys2 <- pc_prop(IDs2$cid, properties = c("InChIKey", "MolecularFormula")) %>% 
   mutate(CID = as.character(CID))
 
-write_lines(InChiKeys2$InChIKey, file = "copy_into_CompTox2.txt") #Rename this text file if desired.
+write_lines(InChiKeys2$InChIKey, file = "copy_into_var_Tox2.txt") #Rename this text file if desired.
 ```
 
 
-# Part 2: CompTox
+# Part 2: var_Tox
 
-Step 1: Open the CompTox Dashboard in your internet browser: https://comptox.epa.gov/dashboard/batch-search
+Step 1: Open the var_Tox Dashboard in your internet browser: https://var_Tox.epa.gov/dashboard/batch-search
 
 Step 2: Under Input Types, select **InChIKey**.
 
@@ -136,7 +136,7 @@ Step 6: Select **OPERA Model Predictions** (found in the Intrinsic and Predicted
 
 Step 7: At the bottom of the page, click **Download Export File**. A popup will appear. Wait a few seconds for it to finish processing, then click **Download File**.
 
-Step 8: Copy the downloaded CSV file into your project folder. Either rename your file to "comptoxresults1.csv"/"comptoxresults2.csv", or change the first parameter of *read_csv* (below) to match the name of your file.
+Step 8: Copy the downloaded CSV file into your project folder. Either rename your file to "var_Toxresults1.csv"/"var_Toxresults2.csv", or change the first parameter of *read_csv* (below) to match the name of your file.
 
 Step 9: Repeat Steps 3-8 for the other list of chemical.
 
@@ -144,7 +144,7 @@ Step 9: Repeat Steps 3-8 for the other list of chemical.
 When you've completed the above steps, you can go ahead and run the next code block to process the results into something more manageable.
 
 ```{r import, message = FALSE}
-compTox <- read_csv("comptoxresults1a.csv", col_names = TRUE) %>%
+var_Tox <- read_csv("var_Toxresults1a.csv", col_names = TRUE) %>%
   select(matches("INPUT|NAME|AOH|BIO|HENRY|KM|KOC|LOG")) %>% #Uses text matching to keep only the columns we care about
   rename_with(~ c("Key","Name", "AOH", "BCF", "BIODEG_HL", "HenryLaw_Const", "KM", "log_KOA", "KOC", "log_KOW")) %>% #Renames the columns to be a little more readable
   rowwise() %>%
@@ -155,15 +155,15 @@ compTox <- read_csv("comptoxresults1a.csv", col_names = TRUE) %>%
   relocate(matches("Group|CmpdID"), .before = Name)
 
 results <- chemical %>%
-  full_join(PubChem_IDs, by = c("SMILES" = "query")) %>% #Combines previously created tables by similar columns
+  full_join(IDs, by = c("SMILES" = "query")) %>% #Combines previously created tables by similar columns
   full_join(InChiKeys, by = c("cid" = "CID")) %>%
-  full_join(compTox, by = c("InChIKey" = "Key"))
+  full_join(var_Tox, by = c("InChIKey" = "Key"))
 
 
 
 
 
-compTox2 <- read_csv("comptoxresults2a.csv", col_names = TRUE) %>%
+var_Tox2 <- read_csv("var_Toxresults2a.csv", col_names = TRUE) %>%
   select(matches("INPUT|NAME|AOH|BIO|HENRY|KM|KOC|LOG")) %>% #Uses text matching to keep only the columns we care about
   rename_with(~ c("Key","Name", "AOH", "BCF", "BIODEG_HL", "HenryLaw_Const", "KM", "log_KOA", "KOC", "log_KOW")) %>% #Renames the columns to be a little more readable
   rowwise() %>%
@@ -174,9 +174,9 @@ compTox2 <- read_csv("comptoxresults2a.csv", col_names = TRUE) %>%
   relocate(matches("Group|CmpdID"), .before = Name)
 
 results2 <- chemical2 %>%
-  full_join(PubChem_IDs2, by = c("SMILES" = "query")) %>% #Combines previously created tables by similar columns
+  full_join(IDs2, by = c("SMILES" = "query")) %>% #Combines previously created tables by similar columns
   full_join(InChiKeys2, by = c("cid" = "CID")) %>%
-  full_join(compTox2, by = c("InChIKey" = "Key"))
+  full_join(var_Tox2, by = c("InChIKey" = "Key"))
 
 
 
