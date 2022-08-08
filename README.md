@@ -9,6 +9,10 @@ R package to support automated testing in courses.
 
 ## Instruction for running tests on .R /.Rmd
 
+### Remember to clear Global environment before running tests
+	rm(list = ls(all.names = TRUE))
+	gc()
+
 ### When tests are running on .R
 	
 	library(testthat)
@@ -21,6 +25,9 @@ R package to support automated testing in courses.
 	library(devtools)
 	library("knitr")
 	knit("../xxx.Rmd")
+
+
+
 
 ## Specific instructions for different machines 
 

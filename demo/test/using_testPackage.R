@@ -1,14 +1,8 @@
 #set the correct working directory
 #ctrl+A select all to run
 
-install.packages("https://cran.r-project.org/src/contrib/Archive/rlang/rlang_1.0.3.tar.gz", repo=NULL, type="source")
-install.packages("devtools")
-library(devtools)
-devtools::install_github("UofTChem-Teaching/testthat_chem")
-library(testthat)
-library(testthat_chem)
 library("knitr")
-knit("../demo2Tutorial1_keys.Rmd")
+knit("../demo_keys.Rmd")
 
 
 ############################################################################
@@ -16,8 +10,8 @@ knit("../demo2Tutorial1_keys.Rmd")
 ############################################################################
 my_data_list <-
   list(
-    "compounds" = compounds,
-    "compounds2" = compounds2,
+    "chemical" = chemical,
+    "chemical2" = chemical2,
     "compTox" = compTox,
     "compTox2" = compTox2,
     "InChiKeys" = InChiKeys,
@@ -33,12 +27,12 @@ my_data_list <-
 for (i in seq_along(my_data_list)) {
   name <- names(my_data_list)[i]
   data <- my_data_list[[i]]
-  if (name == "compounds" || name == "compounds2") {
+  if (name == "chemical" || name == "chemical2") {
     test_column_names(data, c("SMILES"), name = name)
     test_dimensions(data, c(as.integer(10), as.integer(1)), name = name)
     test_column_type(data, "SMILES", "character", name = name)
     #check entry
-    if (name == "compounds") {
+    if (name == "chemical") {
       test_entry(
         data,
         "SMILES",
@@ -47,7 +41,7 @@ for (i in seq_along(my_data_list)) {
         name = name
       )
     }
-    if (name == "compounds2") {
+    if (name == "chemical2") {
       test_entry(
         data,
         "SMILES",
