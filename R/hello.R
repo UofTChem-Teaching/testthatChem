@@ -18,6 +18,7 @@
 
 #' @export
 
+#check column names and check if data contains the correct numble of columns
 test_column_names <- function(data, expected, name = "the data") {
   description <-
     paste("check if", name, "contains the correct column names")
@@ -26,6 +27,7 @@ test_column_names <- function(data, expected, name = "the data") {
   })
 }
 
+#check dimensions of data
 test_dimensions <- function(data, expected, name = "the data") {
   description <-
     paste("check if", name, "has the correct number of rows and columns")
@@ -34,6 +36,7 @@ test_dimensions <- function(data, expected, name = "the data") {
   })
 }
 
+#check types, could be integer/double/character/raw/numeric/logical/complex
 test_column_type <-
   function(data, col_name, expected, name = "the data") {
     description <-
@@ -48,6 +51,7 @@ test_column_type <-
     })
   }
 
+#check entry of the tibble
 test_entry <-
   function(data, col_name, row_index, expected, name = "the data") {
     description <-
@@ -61,7 +65,7 @@ test_entry <-
       expect_equal(data[[col_name]][row_index],!!expected)
     })
   }
-
+#check if NA exist
 test_NA <- function(data, col_name, expected, name = "the data") {
   description <-
     paste("check if cells inside", name, "contains NA invalid rows")
@@ -69,7 +73,9 @@ test_NA <- function(data, col_name, expected, name = "the data") {
     expect_equal(any(is.na(data[[col_name]])),!!expected)
   })
 }
-
+#############
+#check plots#
+#############
 test_dimensions_plot <-
   function(data, col_name, expected, name = "the data") {
     description <-
@@ -82,7 +88,7 @@ test_dimensions_plot <-
       expect_equal(dim(data[[col_name]]), !!expected)
     })
   }
-#demo for above
+#demo for above 0810
 test_column_type_plot <-
   function(data,
            table_name,
