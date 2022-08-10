@@ -82,7 +82,7 @@ test_dimensions_plot <-
       expect_equal(dim(data[[col_name]]), !!expected)
     })
   }
-
+#demo for above
 test_column_type_plot <-
   function(data,
            table_name,
