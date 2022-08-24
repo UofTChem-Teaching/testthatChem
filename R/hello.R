@@ -73,9 +73,9 @@ test_NA <- function(data, col_name, expected, name = "the data") {
     expect_equal(any(is.na(data[[col_name]])),!!expected)
   })
 }
-#############
-#check plots#
-#############
+############################
+#check data stored in plots#
+############################
 test_dimensions_plot <-
   function(data, col_name, expected, name = "the data") {
     description <-
@@ -88,7 +88,7 @@ test_dimensions_plot <-
       expect_equal(dim(data[[col_name]]), !!expected)
     })
   }
-#demo for above 0810
+
 test_column_type_plot <-
   function(data,
            table_name,
