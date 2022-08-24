@@ -27,8 +27,8 @@ test_column_names <- function(data, expected, name = "the data") {
   })
 }
 
-#check dimensions of a value
-test_values <- function(data, expected, name = "the data") {
+#check lengths of a value, note that "data" and "values" are two different environment types
+test_value_lengths <- function(data, expected, name = "the data") {
   description <-
     paste("check if", name, "has the correct length")
   test_that(description, {
@@ -57,6 +57,21 @@ test_column_type <-
             expected)
     test_that(description, {
       expect_type(data[[col_name]], expected)
+    })
+  }
+
+#check the value of a specific calculation. e.g., expect_equal(max(rollsummer, na.rm = TRUE), 50)
+test_value_cal <-
+  function(data, expected, name = "the data") {
+    description <-
+      paste("check if",
+            name,
+            "has the correct value at row",
+            row_index,
+            "and column",
+            col_name)
+    test_that(description, {
+      expect_equal(data,!!expected)
     })
   }
 
