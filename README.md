@@ -3,8 +3,11 @@
 R package to support automated testing in courses.
 
 ## Instruction for the package installation and loading
-
 	install.packages("devtools")
+	devtools::install_github("UofTChem-Teaching/testthatChem")
+
+### If you have installed an old version of "testthatChem" but want to update to the new version, please run the following lines
+	detach("package:stringr", unload = TRUE)
 	devtools::install_github("UofTChem-Teaching/testthatChem")
 
 ## Instruction for running tests on .R /.Rmd
