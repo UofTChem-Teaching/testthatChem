@@ -131,6 +131,7 @@ test_column_type_plot <-
     })
   }
 
+#check label entry in a plot
 test_entry_plot <-
   function(data,
            col_name,
@@ -153,5 +154,35 @@ test_entry_plot <-
       )
     test_that(description, {
       expect_equal(data[[col_name]][row_index][[lb]], !!expected)
+    })
+  }
+
+#check data entry in a plot. row_index1 points to the data_name
+#e.g.,   wplot$data[7]$NHex[1922] = wplot[[data]][7][[NHex]][1992]
+test_entry_data_plot <-
+  function(data,
+           col_name,
+           row_index,
+           data_name,
+           entry_index,
+           expected,
+           name = "the data") {
+    description <-
+      paste(
+        "check if",
+        name,
+        "has the correct value of",
+        expected,
+        "at row",
+        row_index,
+        "of the column:",
+        col_name,
+        ",level:",
+        data_name,
+        ",entry number:",
+        entry_index
+      )
+    test_that(description, {
+      expect_equal(data[[col_name]][row_index][[data_name]][entry_index], !!expected)
     })
   }
