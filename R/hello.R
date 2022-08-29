@@ -66,10 +66,7 @@ test_value_cal <-
     description <-
       paste("check if",
             name,
-            "has the correct value at row",
-            row_index,
-            "and column",
-            col_name)
+            "has the correct value")
     test_that(description, {
       expect_equal(data,!!expected)
     })
