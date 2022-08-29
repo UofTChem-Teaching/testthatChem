@@ -8,7 +8,7 @@ R package to support automated testing in courses.
 
 ### If you have installed an old version of "testthatChem" but want to update to the new version, please run the following lines
 	detach("package:testthatChem", unload = TRUE)
-        remove.packages("testthatChem")
+	remove.packages("testthatChem")
 	devtools::install_github("UofTChem-Teaching/testthatChem")
 
 ## Instruction for running tests on .R /.Rmd
