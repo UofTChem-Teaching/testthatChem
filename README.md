@@ -28,7 +28,7 @@ R package to support automated testing in courses.
 	library(devtools)
 	library("knitr")
 	knit("../xxx.Rmd")
-#### * Sometimes, you might see a warning message like: WARNING: Rtools is required to build R packages, but is not currently installed. You can ignore it because you don't not need to build/compile a package. 
+#### * Sometimes, you might see a warning message like: WARNING: Rtools is required to build R packages, but is not currently installed. You can ignore it because you are not required to build/compile a package. 
 
 ## Specific instructions for different machines 
 
