@@ -128,8 +128,27 @@ test_column_type_plot <-
     })
   }
 
-#check label entry in a plot
-test_entry_plot <-
+#check if a plot is labeled
+test_exist_label_plot <-
+  function(data,
+           table_name,
+           col_name,
+           expected,
+           name = "the data") {
+    description <-
+      paste("check if",
+            name,
+            "has a x<-1/y<-2 || x<-2/y<-1 label",
+            col_name,
+            "with type",
+            expected)
+    test_that(description, {
+      expect_type(data[[table_name]][col_name], expected)
+    })
+  }
+
+#check the value of a label entry in a plot
+test_entry_label_plot <-
   function(data,
            col_name,
            row_index,
@@ -153,6 +172,9 @@ test_entry_plot <-
       expect_equal(data[[col_name]][row_index][[lb]], !!expected)
     })
   }
+
+
+
 
 #check data entry in a plot. row_index1 points to the data_name
 #e.g.,   wplot$data[7]$NHex[1922] = wplot[[data]][7][[NHex]][1992]
