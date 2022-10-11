@@ -36,7 +36,7 @@ test_value_lengths <- function(data, expected, name = "the data") {
   })
 }
 
-#check dimensions of data
+#check dimensions of dataa
 test_dimensions <- function(data, expected, name = "the data") {
   description <-
     paste("check if", name, "has the correct number of rows and columns")
