@@ -72,7 +72,7 @@ test_value_cal <-
     })
   }
 
-#check entry of the tibble
+#check the entry of a tibble
 test_entry <-
   function(data, col_name, row_index, expected, name = "the data") {
     description <-
@@ -94,6 +94,8 @@ test_NA <- function(data, col_name, expected, name = "the data") {
     expect_equal(any(is.na(data[[col_name]])),!!expected)
   })
 }
+
+
 ############################
 #check data stored in plots#
 ############################
@@ -172,7 +174,6 @@ test_entry_label_plot <-
       expect_equal(data[[col_name]][row_index][[lb]], !!expected)
     })
   }
-
 
 
 
