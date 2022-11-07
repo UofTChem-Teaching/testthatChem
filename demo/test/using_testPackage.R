@@ -1,137 +1,54 @@
+#######################################
+# NOTE THAT
+# This demo code shows that what tests can be ran
+#######################################
+
 #set the correct working directory
 #ctrl+A select all to run
 
+rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
+gc()
+
 library("knitr")
 knit("../demo_keys.Rmd")
+
 library(testthat)
 library(testthatChem)
-#rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
-#gc()
 
 ############################################################################
 # Main
 ############################################################################
 my_data_list <-
   list(
-    "material" = material,
-    "material2" = material2,
-    "var_T" = var_T,
-    "var_T2" = var_T2,
-    "chiKeys" = chiKeys,
-    "chiKeys2" = chiKeys2,
-    "IDs" = IDs,
-    "IDs2" = IDs2,
-    "results" = results,
-    "results2" = results2,
-    "resultsCombined" = resultsCombined,
-    "b_plot" = b_plot,
-    "bbplot" = bbplot
+    "rollmeanS" = rollmeanS,
+    "df" = df,
+    "correlation" = correlation,
+    "a_plot" = a_plot
   )
 for (i in seq_along(my_data_list)) {
   name <- names(my_data_list)[i]
   data <- my_data_list[[i]]
-  if (name == "material" || name == "material2") {
-    test_column_names(data, c("SMILES"), name = name)
-    test_dimensions(data, c(as.integer(10), as.integer(1)), name = name)
-    test_column_type(data, "SMILES", "character", name = name)
-    #check entry
-    if (name == "material") {
-      test_entry(
-        data,
-        "SMILES",
-        10,
-        "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O",
-        name = name
-      )
-    }
-    if (name == "material2") {
-      test_entry(
-        data,
-        "SMILES",
-        10,
-        "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CO",
-        name = name
-      )
-    }
+  if (name == "rollmeanS") {
+    test_value_lengths(data, 160, name = name)
+    test_value_cal(max(data, na.rm = TRUE), 59.571429, name = name)
   }
-  if (name == "var_T" || name == "var_T2") {
-    test_dimensions(data, c(as.integer(10), as.integer(8)), name = name)
-    test_column_type(data, "log_po", "double", name = name)
-    if (name == "var_T") {
-      test_entry(data, "Group", 10, "Group1", name = name)
-      test_entry(data, "CmpdID", 10, 10, name = name)
-    }
-    if (name == "var_T2") {
-      test_entry(data, "Group", 10, "Group2", name = name)
-      test_entry(data, "CmpdID", 10, 10, name = name)
-    }
-  }
-  if (name == "chiKeys" || name == "chiKeys2") {
+  if (name == "df") {
     test_column_names(data,
                       c(
-                        as.character('CID'),
-                        as.character('MolecularFormula'),
-                        as.character('InChIKey')
+                        as.character('Elements'),
+                        as.character('xbar'),
+                        as.character('sigma'),
+                        as.character('rsd')
                       ),
                       name = name)
-    test_dimensions(data, c(as.integer(10), as.integer(3)), name = name)
-    test_column_type(data, "CID", "character", name = name)
-    test_column_type(data, "MolecularFormula", "character", name = name)
-    test_column_type(data, "InChIKey", "character", name = name)
-    test_NA(data, "CID", FALSE, name = name)
+    test_dimensions(data, c(as.integer(3), as.integer(4)), name = name)
+    test_column_type(data, "Elements", "character", name = name)
+    test_column_type(data, "xbar", "double", name = name)
+    test_entry(data, "rsd", 3, 8.3996056, name = name)
   }
-  if (name == "IDs" || name == "IDs2") {
-    test_column_names(data, c(as.character('query'), as.character('cid')), name = name)
-    test_dimensions(data, c(as.integer(10), as.integer(2)), name = name)
-    test_column_type(data, "query", "character", name = name)
-    test_column_type(data, "cid", "character", name = name)
-  }
-  if (name == "results" || name == "results2") {
-    test_dimensions(data, c(as.integer(10), as.integer(11)), name = name)
-    test_column_type(data, "log_po", "double", name = name)
-    test_column_type(data, "log_pa", "double", name = name)
-    test_NA(data, "log_po", FALSE, name = name)
-    test_NA(data, "log_pa", FALSE, name = name)
-  }
-  if (name == "resultsCombined") {
-    test_dimensions(data, c(as.integer(20), as.integer(11)), name = name)
-    test_column_names(
-      data,
-      c(
-        as.character('SMILES'),
-        as.character('cid'),
-        as.character('MolecularFormula'),
-        as.character('InChIKey'),
-        as.character('Group'),
-        as.character('CmpdID'),
-        as.character('Name'),
-        as.character('log_po'),
-        as.character('log_poW'),
-        as.character('log_pa'),
-        as.character('log_poC')
-      ),
-      name = name
-    )
-    test_column_type(data, "SMILES", "character", name = name)
-    test_column_type(data, "cid", "character", name = name)
-
-
-    test_column_type(data, "MolecularFormula", "character", name = name)
-    test_column_type(data, "InChIKey", "character", name = name)
-    test_column_type(data, "Group", "character", name = name)
-    test_column_type(data, "CmpdID", "integer", name = name)
-    test_column_type(data, "Name", "character", name = name)
-    test_column_type(data, "log_poC", "double", name = name)
-    test_column_type(data, "log_po", "double", name = name)
-    test_column_type(data, "log_poW", "double", name = name)
-    test_column_type(data, "log_pa", "double", name = name)
-    test_NA(data, "log_poC", FALSE, name = name)
-    test_NA(data, "log_po", FALSE, name = name)
-    test_NA(data, "log_poW", FALSE, name = name)
-    test_NA(data, "log_pa", FALSE, name = name)
-  }
-  if (name == "bbplot" || name == "b_plot") {
-    #print all structures under bbplot/b_plot
+  if (name == "correlation" ||
+      name == "a_plot") {
+    #check plot data structures and data attributes
     test_column_names(
       data,
       c(
@@ -147,15 +64,17 @@ for (i in seq_along(my_data_list)) {
       ),
       name = name
     )
-    test_dimensions_plot(data, "data",  c(as.integer(20), as.integer(11)), name = name)
-    test_column_type_plot(data, "data", "log_po", "double", name = name)
-    test_entry_plot(data, "labels", 4, "label", "CmpdID", name = name)
+    test_dimensions_plot(data, "data",  c(as.integer(166), as.integer(5)), name = name)
+    test_column_type_plot(data, "data", "unemploy", "integer", name = name)
 
-    if (name == "bbplot") {
-      test_entry_plot(data, "labels", 1, "x", "log KOA", name = name)
+    if (name == "correlation") {
+      test_entry_data_plot(correlation, "data", 2, "psavert", 3, correlation$data$psavert[3], name = name)
+      test_exist_label_plot(data,"labels", 1, typeof(correlation$labels[1]))
+      test_exist_label_plot(data,"labels", 2, typeof(correlation$labels[2]))#type of list existed
     }
-    if (name == "b_plot") {
-      test_entry_plot(data, "labels", 1, "x", "log KOC", name = name)
+    if (name == "a_plot") {
+      test_exist_label_plot(data,"labels", 1, typeof(a_plot$labels[1]))
     }
   }
+
 }

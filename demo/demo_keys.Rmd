@@ -1,234 +1,104 @@
 ---
-title: "Tutorial X "
-output: html_document
+title: "Demo RMD fot testthatChem"
+output:
+  pdf_document:
+    number_sections: yes
 ---
 
-# BEFORE YOU START
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = TRUE, # show warnings
+  message = TRUE, # show messages
+  error = TRUE, # do not interrupt generation in case of errors,
+  echo = TRUE) # show R code)
 
-Create a new RStudio Project for Tutorial X and copy this .Rmd file into it.
-
-## Packages
-=
-Install the required packages *webchem* and *tidyverse*. We will use *webchem* to quickly access the online material database **PubChem** and convert our compound list into a format recognized by var_T.
-
-```{r packages, message = FALSE, error = TRUE}
-if(!require("webchem")) install.packages("webchem") #Only runs if the package is not already installed on your device.
-if(!require("tidyverse")) install.packages("tidyverse")
-
-library(webchem) #Loads package into memory so it can be used by the code.
-library(tidyverse)
 ```
 
-# Part 1
+```{r install-tidy, eval = FALSE}
+install.packages("tidyverse")
+install.packages("zoo")
+install.packages("ggpmisc")
+install.packages("openxlsx")
+```
 
-```{r}
-cmpdList1 <- c( #Perfluoroalkyl acids===
-  "FC(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFBA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFPA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFHxA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFHpA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFOA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFNA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFDA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFUA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O", #PFDoDA
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(=O)O" #PFTrDA
-)
-# Every SMILES string must be enclosed in quotation marks.==++
-# Also make sure that every line inside the brackets ends in a comma EXCEPT the last one.
-
-
-cmpdList2 <- c( #Fluorotelomer alcohols
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)CCO", #4:2 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CO", #5:1 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CCO", #6:2 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CO", #7:1 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CCO", #8:2 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CO", #9:1 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CCO", #10:2 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CO", #11:1 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CCO", #12:2 FTOH
-  "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CO" #13:1 FTOH
-)
-
-cmpdList3 <- c( #Chlorinated Paraffins
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl",
-  "ClCC(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C(Cl)CCl"
-)
-
-cmpdList4 <- c( #Polychlorinated biphenyls
-  "ClC1=CC=CC(C2=CC=CC=C2)=C1",
-  "ClC1=C(Cl)C=CC(C2=CC=CC=C2)=C1",
-  "ClC1=C(Cl)C(Cl)=CC(C2=CC=CC=C2)=C1",
-  "ClC1=C(Cl)C(Cl)=C(Cl)C(C2=CC=CC=C2)=C1",
-  "ClC1=C(Cl)C(Cl)=C(Cl)C(C2=C(Cl)C=CC=C2)=C1",
-  "ClC1=C(Cl)C(Cl)=C(Cl)C(C2=C(Cl)C(Cl)=CC=C2)=C1",
-  "ClC1=C(Cl)C(Cl)=C(Cl)C(C2=C(Cl)C(Cl)=C(Cl)C=C2)=C1",
-  "ClC1=C(Cl)C(Cl)=C(Cl)C(C2=C(Cl)C(Cl)=C(Cl)C(Cl)=C2)=C1",
-  "ClC1=C(Cl)C(Cl)=C(Cl)C(C2=C(Cl)C(Cl)=C(Cl)C(Cl)=C2(Cl))=C1",
-  "ClC1=C(Cl)C(Cl)=C(Cl)C(C2=C(Cl)C(Cl)=C(Cl)C(Cl)=C2(Cl))=C1(Cl)"
-)
-
-cmpdList5 <- c( #Alkyl OPFRs
-  "CCOP(=O)(OCC)OCC", #TEP
-  "CCCOP(=O)(OCCC)OCCC", #TPP
-  "CCCCOP(=O)(OCCCC)OCCCC", #TBP
-  "CCCCCOP(=O)(OCCCCC)OCCCCC", #TPeP
-  "CCCCCCOP(=O)(OCCCCCC)OCCCCCC", #THxP
-  "CCCCCCCOP(=O)(OCCCCCCC)OCCCCCCC", #THpP
-  "CCCCCCCCOP(=O)(OCCCCCCCC)OCCCCCCCC", #TOP
-  "CCCCCCCCCOP(=O)(OCCCCCCCCC)OCCCCCCCCC", #TNP
-  "CCCCCCCCCCOP(=O)(OCCCCCCCCCC)OCCCCCCCCCC" #TDP
-)
-
-
+#Load toy data
+```{r import-data-format-remove-errors}
+winter <- read.csv("toy1_dataset.csv", sep = ",")
+winter$date <- convertToDateTime(winter$Date, origin = "1900-01-01")
+winter <- subset(winter,unemploy!=-999)
 
 ```
 
 
-The code below will convert the SMILES strings into a search format recognized by the var_T database. After running this block you should have two text files in your project folder.
-
-```{r export}
-material <- tibble(SMILES = cmpdList1) #Converts the input data into a 1-column tibble (tidy table)
-
-IDs <- get_cid(material$SMILES, from = "smiles") #Obtains the PubChem database IDs for each input compound
-
-chiKeys <- pc_prop(IDs$cid, properties = c("InChIKey", "MolecularFormula")) %>% #Obtains the International material Identifier Key (InChIKey) for each PubChem ID
-  mutate(CID = as.character(CID))
-
-write_lines(chiKeys$InChIKey, file = "copy_into_var_T1.txt") #Outputs to a tab-delimited text file. Feel free to rename this file.
-
-
-
-material2 <- tibble(SMILES = cmpdList2) 
-
-IDs2 <- get_cid(material2$SMILES, from = "smiles") 
-
-chiKeys2 <- pc_prop(IDs2$cid, properties = c("InChIKey", "MolecularFormula")) %>% 
-  mutate(CID = as.character(CID))
-
-write_lines(chiKeys2$InChIKey, file = "copy_into_var_T2.txt") #Rename this text file if desired.
+```{r create-winter-oddpoe}
+winter$poe <- winter$unemploy+winter$psavert
 ```
 
+#Calculate the mean, standard deviation, and relative standard deviation 
+```{r calculate-economy-statistics, error=TRUE, message=TRUE}
+rsdfun <- function(array){
+  xbar <- mean(array)
+  sigma <- sd(array)
+  rsd <- 100*sigma/xbar
+  vector <- cbind.data.frame(xbar,sigma,rsd)
+  return(vector)
+}
 
-# Part 2: var_T
-
-Step 1: Open the var_T Dashboard in your internet browser: https://var_T.epa.gov/dashboard/batch-search
-
-Step 2: Under Input Types, select **InChIKey**.
-
-Step 3: Open one of the text files containing your converted compound list and copy the entire contents into the Search window. Make sure there are no empty lines.
-
-Step 4: Below the Search window, click **Choose Export Options**.
-
-Step 5: Scroll down, and use the dropdown to select **CSV** as your output format.
-
-Step 6: Select **OPERA Model Predictions** (found in the Intrinsic and Predicted Properties category). Don't click any other options, except those already highlighted.
-
-Step 7: At the bottom of the page, click **Download Export File**. A popup will appear. Wait a few seconds for it to finish processing, then click **Download File**.
-
-Step 8: Copy the downloaded CSV file into your project folder. Either rename your file to "var_Tresults1.csv"/"var_Tresults2.csv", or change the first parameter of *read_csv* (below) to match the name of your file.
-
-Step 9: Repeat Steps 3-8 for the other list of material.
-
-
-When you've completed the above steps, you can go ahead and run the next code block to process the results into something more manageable.
-
-```{r import, message = FALSE}
-var_T <- read_csv("var_Tresults1a.csv", col_names = TRUE) %>%
-  select(matches("INPUT|NAME|AOH|BIO|HENRY|KM|KOC|LOG")) %>% #Uses text matching to keep only the columns we care about
-  rename_with(~ c("Key","Name", "AOH", "BCF", "BIODEG_HL", "HenryLaw_Const", "KM", "log_po", "KOC", "log_poW")) %>% #Renames the columns to be a little more readable
-  rowwise() %>%
-  mutate(log_pa = (log_poW - log_po), log_poC = log10(KOC)) %>%
-  select(-c(HenryLaw_Const, KOC, AOH, BCF, BIODEG_HL, KM)) %>% #Deletes unwanted columns
-  ungroup() %>%
-  mutate(Group = "Group1", CmpdID = row_number()) %>% 
-  relocate(matches("Group|CmpdID"), .before = Name)
-
-results <- material %>%
-  full_join(IDs, by = c("SMILES" = "query")) %>% #Combines previously created tables by similar columns
-  full_join(chiKeys, by = c("cid" = "CID")) %>%
-  full_join(var_T, by = c("InChIKey" = "Key"))
-
-
-
-
-
-var_T2 <- read_csv("var_Tresults2a.csv", col_names = TRUE) %>%
-  select(matches("INPUT|NAME|AOH|BIO|HENRY|KM|KOC|LOG")) %>% #Uses text matching to keep only the columns we care about
-  rename_with(~ c("Key","Name", "AOH", "BCF", "BIODEG_HL", "HenryLaw_Const", "KM", "log_po", "KOC", "log_poW")) %>% #Renames the columns to be a little more readable
-  rowwise() %>%
-  mutate(log_pa = (log_poW - log_po), log_poC = log10(KOC)) %>%
-  select(-c(HenryLaw_Const, KOC, AOH, BCF, BIODEG_HL, KM)) %>% #Deletes unwanted columns
-  ungroup() %>%
-  mutate(Group = "Group2", CmpdID = row_number()) %>%
-  relocate(matches("Group|CmpdID"), .before = Name)
-
-results2 <- material2 %>%
-  full_join(IDs2, by = c("SMILES" = "query")) %>% #Combines previously created tables by similar columns
-  full_join(chiKeys2, by = c("cid" = "CID")) %>%
-  full_join(var_T2, by = c("InChIKey" = "Key"))
-
-
-
-
-resultsCombined <- results %>%
-  bind_rows(results2)
-
-print(resultsCombined)
-
-
-#Optional code for creating a csv (if you want to make your graphs in Excel):
-
-#write_csv(resultsCombined, file = "Predicted_Partioning_Coefficients.csv")
-```
-# Part 3: Example Plots
-
-Example plot of log KOA as a function of log KAW.
-
-```{r plot1}
-bbplot <- ggplot(data = resultsCombined, mapping = aes(x = log_po, y = log_pa, color = Group, label = CmpdID))+ 
-  geom_point()+ #Converts plot to a scatter plot
-  geom_text()+ #Adds a text layer for labels
-  labs(x = "log KOA", y = "log KAW")+ #Custom axis labels
-  theme_classic() #Simplifies layout and removes gridlines
-print(bbplot)
+unemploy <- rsdfun(winter$unemploy)
+psavert <- rsdfun(winter$psavert)
+poe <- rsdfun(winter$poe)
+Elements <- c("unemploy", "psavert", "poe")
+df <- rbind(unemploy, psavert, poe)
+df <- cbind(Elements,df)
 ```
 
+#Format summer data
+```{r summer-data-import-format-remove-errors}
+summer <- read.csv("toy2_dataset.csv", sep = ",")
+summer$date <- convertToDateTime(summer$Date, origin = "1900-01-01")
+summer <- subset(summer,unemploy!=-999)
+```
 
-This is the same plot as above, but with the addition of the optional package *ggrepel*. This prevents data labels from appearing directly on top of data points.
-
-```{r fancyplot1}
-if(!require("ggrepel")) install.packages("ggrepel")
-library(ggrepel)
-
-bbplot <- ggplot(data = resultsCombined, mapping = aes(x = log_po, y = log_pa, color = Group, label = CmpdID))+
-  geom_point()+
-  geom_text_repel(min.segment.length = 0.1)+ #Replaces 'geom_text()' in the previous code block
-  labs(x = "log KOA", y = "log KAW")+
-  theme_classic()
-print(bbplot)
+#POE data
+```{r summer-create-oddpoe}
+summer <- mutate(summer, poe = unemploy + psavert)
 
 ```
 
-Another example plot, this time plotting log KAW as a function of log KOC (organic carbon:water coefficient).
+#Plot a time series of your summer poe, unemploy of the region and psavert rate over the seven day period covered by your data file.
+```{r summer-plot-time-series}
+a_plot <- ggplot(data = summer, aes(x = date))+
+  geom_line(aes(y = unemploy), color = "blue")+
+  geom_line(aes(y = psavert), color = "red")+
+  geom_line(aes(y = poe), color = "green")+
+  ggtitle("Odd poe constituents in summer")+
+  xlab("Date")+
+  ylab("rate")+
+  theme_bw()
+print(a_plot)
+```
 
-```{r fancyplot2}
 
-b_plot <- ggplot(data = resultsCombined, mapping = aes(x = log_poC, y = log_pa, color = Group, label = CmpdID))+
-  geom_point()+
-  geom_text_repel(min.segment.length = 0.1)+
-  labs(x = "log KOC", y = "log KAW")+
-  theme_classic()
-print(b_plot)
+
+#Calculate the mean, standard deviation, and relative standard deviation 
+```{r summer-summary-statistics}
+unemploy <- rsdfun(summer$unemploy)
+psavert <- rsdfun(summer$psavert)
+poe <- rsdfun(summer$poe)
+Elements <- c("unemploy", "psavert", "poe")
+```
+
+#Plot a correlation plot for psavert rate and unemployment for your summer data set. 
+
+```{r summer-correlation-plot}
+correlation <- ggplot(data = summer, aes(x = unemploy, y = psavert)) + geom_point()+theme_bw()+
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE)+
+  stat_poly_eq(aes(label =  paste(stat(eq.label), stat(rr.label), sep = "*\", \"*")),
+               formula = y ~ x, rr.digits = 4 , parse = TRUE, label.y = 0.05, size = 3)
+
+```
+
+#Rollmean of summer unemployment
+```{r roll-mean}
+rollmeanS <- rollmean(summer$unemploy, k = 7)
 
 ```
