@@ -65,7 +65,7 @@ summer <- mutate(summer, poe = unemploy + psavert)
 ```
 
 #Plot a time series of your summer poe, unemploy of the region and psavert rate over the seven day period covered by your data file.
-```{r summer-plot-time-series}
+```{r time-series-plot}
 a_plot <- ggplot(data = summer, aes(x = date))+
   geom_line(aes(y = unemploy), color = "blue")+
   geom_line(aes(y = psavert), color = "red")+
@@ -77,10 +77,8 @@ a_plot <- ggplot(data = summer, aes(x = date))+
 print(a_plot)
 ```
 
-
-
 #Calculate the mean, standard deviation, and relative standard deviation 
-```{r summer-summary-statistics}
+```{r summary-statistics}
 unemploy <- rsdfun(summer$unemploy)
 psavert <- rsdfun(summer$psavert)
 poe <- rsdfun(summer$poe)
@@ -89,7 +87,7 @@ Elements <- c("unemploy", "psavert", "poe")
 
 #Plot a correlation plot for psavert rate and unemployment for your summer data set. 
 
-```{r summer-correlation-plot}
+```{r correlation-plot}
 correlation <- ggplot(data = summer, aes(x = unemploy, y = psavert)) + geom_point()+theme_bw()+
   geom_smooth(method = "lm", formula = y ~ x, se = FALSE)+
   stat_poly_eq(aes(label =  paste(stat(eq.label), stat(rr.label), sep = "*\", \"*")),
