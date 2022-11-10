@@ -6,6 +6,8 @@
 #set the correct working directory
 #ctrl+A select all to run
 
+#Nov 10th. no loop & add comments & and how the data is being tested
+
 rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
 gc()
 
