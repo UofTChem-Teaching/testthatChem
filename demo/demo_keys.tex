@@ -1,0 +1,278 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Demo RMD fot testthatChem},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Demo RMD fot testthatChem}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"zoo"}\NormalTok{)}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggpmisc"}\NormalTok{)}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"openxlsx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\#Load toy data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{winter }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"toy1\_dataset.csv"}\NormalTok{, }\AttributeTok{sep =} \StringTok{","}\NormalTok{)}
+\NormalTok{winter}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{convertToDateTime}\NormalTok{(winter}\SpecialCharTok{$}\NormalTok{Date, }\AttributeTok{origin =} \StringTok{"1900{-}01{-}01"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in convertToDateTime(winter$Date, origin = "1900-01-01"): could not find function "convertToDateTime"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{winter }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(winter,unemploy}\SpecialCharTok{!={-}}\DecValTok{999}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{winter}\SpecialCharTok{$}\NormalTok{poe }\OtherTok{\textless{}{-}}\NormalTok{ winter}\SpecialCharTok{$}\NormalTok{unemploy}\SpecialCharTok{+}\NormalTok{winter}\SpecialCharTok{$}\NormalTok{psavert}
+\end{Highlighting}
+\end{Shaded}
+
+\#Calculate the mean, standard deviation, and relative standard
+deviation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rsdfun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(array)\{}
+\NormalTok{  xbar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(array)}
+\NormalTok{  sigma }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(array)}
+\NormalTok{  rsd }\OtherTok{\textless{}{-}} \DecValTok{100}\SpecialCharTok{*}\NormalTok{sigma}\SpecialCharTok{/}\NormalTok{xbar}
+\NormalTok{  vector }\OtherTok{\textless{}{-}} \FunctionTok{cbind.data.frame}\NormalTok{(xbar,sigma,rsd)}
+  \FunctionTok{return}\NormalTok{(vector)}
+\NormalTok{\}}
+
+\NormalTok{unemploy }\OtherTok{\textless{}{-}} \FunctionTok{rsdfun}\NormalTok{(winter}\SpecialCharTok{$}\NormalTok{unemploy)}
+\NormalTok{psavert }\OtherTok{\textless{}{-}} \FunctionTok{rsdfun}\NormalTok{(winter}\SpecialCharTok{$}\NormalTok{psavert)}
+\NormalTok{poe }\OtherTok{\textless{}{-}} \FunctionTok{rsdfun}\NormalTok{(winter}\SpecialCharTok{$}\NormalTok{poe)}
+\NormalTok{Elements }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"unemploy"}\NormalTok{, }\StringTok{"psavert"}\NormalTok{, }\StringTok{"poe"}\NormalTok{)}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(unemploy, psavert, poe)}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(Elements,df)}
+\end{Highlighting}
+\end{Shaded}
+
+\#Format summer data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summer }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"toy2\_dataset.csv"}\NormalTok{, }\AttributeTok{sep =} \StringTok{","}\NormalTok{)}
+\NormalTok{summer}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{convertToDateTime}\NormalTok{(summer}\SpecialCharTok{$}\NormalTok{Date, }\AttributeTok{origin =} \StringTok{"1900{-}01{-}01"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in convertToDateTime(summer$Date, origin = "1900-01-01"): could not find function "convertToDateTime"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summer }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(summer,unemploy}\SpecialCharTok{!={-}}\DecValTok{999}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\#POE data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summer }\OtherTok{\textless{}{-}} \FunctionTok{mutate}\NormalTok{(summer, }\AttributeTok{poe =}\NormalTok{ unemploy }\SpecialCharTok{+}\NormalTok{ psavert)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in mutate(summer, poe = unemploy + psavert): could not find function "mutate"
+\end{verbatim}
+
+\#Plot a time series of your summer poe, unemploy of the region and
+psavert rate over the seven day period covered by your data file.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ summer, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ unemploy), }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ psavert), }\AttributeTok{color =} \StringTok{"red"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ poe), }\AttributeTok{color =} \StringTok{"green"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Odd poe constituents in summer"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Date"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"rate"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in ggplot(data = summer, aes(x = date)): could not find function "ggplot"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(a\_plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in print(a_plot): object 'a_plot' not found
+\end{verbatim}
+
+\#Calculate the mean, standard deviation, and relative standard
+deviation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{unemploy }\OtherTok{\textless{}{-}} \FunctionTok{rsdfun}\NormalTok{(summer}\SpecialCharTok{$}\NormalTok{unemploy)}
+\NormalTok{psavert }\OtherTok{\textless{}{-}} \FunctionTok{rsdfun}\NormalTok{(summer}\SpecialCharTok{$}\NormalTok{psavert)}
+\NormalTok{poe }\OtherTok{\textless{}{-}} \FunctionTok{rsdfun}\NormalTok{(summer}\SpecialCharTok{$}\NormalTok{poe)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in mean.default(array): argument is not numeric or logical: returning NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Elements }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"unemploy"}\NormalTok{, }\StringTok{"psavert"}\NormalTok{, }\StringTok{"poe"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\#Plot a correlation plot for psavert rate and unemployment for your
+summer data set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{correlation }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ summer, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ unemploy, }\AttributeTok{y =}\NormalTok{ psavert)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}\FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{stat\_poly\_eq}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}  \FunctionTok{paste}\NormalTok{(}\FunctionTok{stat}\NormalTok{(eq.label), }\FunctionTok{stat}\NormalTok{(rr.label), }\AttributeTok{sep =} \StringTok{"*}\SpecialCharTok{\textbackslash{}"}\StringTok{, }\SpecialCharTok{\textbackslash{}"}\StringTok{*"}\NormalTok{)),}
+               \AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{rr.digits =} \DecValTok{4}\NormalTok{ , }\AttributeTok{parse =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{label.y =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in ggplot(data = summer, aes(x = unemploy, y = psavert)): could not find function "ggplot"
+\end{verbatim}
+
+\#Rollmean of summer unemployment
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rollmeanS }\OtherTok{\textless{}{-}} \FunctionTok{rollmean}\NormalTok{(summer}\SpecialCharTok{$}\NormalTok{unemploy, }\AttributeTok{k =} \DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in rollmean(summer$unemploy, k = 7): could not find function "rollmean"
+\end{verbatim}
+
+\end{document}

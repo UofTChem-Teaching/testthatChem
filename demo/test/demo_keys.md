@@ -5,15 +5,10 @@ output:
     number_sections: yes
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = TRUE, # show warnings
-  message = TRUE, # show messages
-  error = TRUE, # do not interrupt generation in case of errors,
-  echo = TRUE) # show R code)
 
-```
 
-```{r install-tidy, eval = FALSE}
+
+```r
 install.packages("tidyverse")
 install.packages("zoo")
 install.packages("ggpmisc")
@@ -21,7 +16,8 @@ install.packages("openxlsx")
 ```
 
 
-```{r load-tidy, eval = FALSE}
+
+```r
 library("tidyverse")
 library("zoo")
 library("ggpmisc")
@@ -29,20 +25,22 @@ library("openxlsx")
 ```
 
 #Load toy data
-```{r import-data-format-remove-errors}
+
+```r
 winter <- read.csv("toy1_dataset.csv", sep = ",")
 winter$date <- convertToDateTime(winter$Date, origin = "1900-01-01")
 winter <- subset(winter,unemploy!=-999)
-
 ```
 
 
-```{r create-winter-oddpoe}
+
+```r
 winter$poe <- winter$unemploy+winter$psavert
 ```
 
 #Calculate the mean, standard deviation, and relative standard deviation 
-```{r calculate-economy-statistics, error=TRUE, message=TRUE}
+
+```r
 rsdfun <- function(array){
   xbar <- mean(array)
   sigma <- sd(array)
@@ -60,20 +58,22 @@ df <- cbind(Elements,df)
 ```
 
 #Format summer data
-```{r summer-data-import-format-remove-errors}
+
+```r
 summer <- read.csv("toy2_dataset.csv", sep = ",")
 summer$date <- convertToDateTime(summer$Date, origin = "1900-01-01")
 summer <- subset(summer,unemploy!=-999)
 ```
 
 #POE data
-```{r summer-create-oddpoe}
-summer <- mutate(summer, poe = unemploy + psavert)
 
+```r
+summer <- mutate(summer, poe = unemploy + psavert)
 ```
 
 #Plot a time series of your summer poe, unemploy of the region and psavert rate over the seven day period covered by your data file.
-```{r time-series-plot}
+
+```r
 a_plot <- ggplot(data = summer, aes(x = date))+
   geom_line(aes(y = unemploy), color = "blue")+
   geom_line(aes(y = psavert), color = "red")+
@@ -85,8 +85,11 @@ a_plot <- ggplot(data = summer, aes(x = date))+
 print(a_plot)
 ```
 
+![plot of chunk time-series-plot](figure/time-series-plot-1.png)
+
 #Calculate the mean, standard deviation, and relative standard deviation 
-```{r summary-statistics}
+
+```r
 unemploy <- rsdfun(summer$unemploy)
 psavert <- rsdfun(summer$psavert)
 poe <- rsdfun(summer$poe)
@@ -95,16 +98,16 @@ Elements <- c("unemploy", "psavert", "poe")
 
 #Plot a correlation plot for psavert rate and unemployment for your summer data set. 
 
-```{r correlation-plot}
+
+```r
 correlation <- ggplot(data = summer, aes(x = unemploy, y = psavert)) + geom_point()+theme_bw()+
   geom_smooth(method = "lm", formula = y ~ x, se = FALSE)+
   stat_poly_eq(aes(label =  paste(stat(eq.label), stat(rr.label), sep = "*\", \"*")),
                formula = y ~ x, rr.digits = 4 , parse = TRUE, label.y = 0.05, size = 3)
-
 ```
 
 #Rollmean of summer unemployment
-```{r roll-mean}
-rollmeanS <- rollmean(summer$unemploy, k = 7)
 
+```r
+rollmeanS <- rollmean(summer$unemploy, k = 7)
 ```
