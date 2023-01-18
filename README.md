@@ -6,8 +6,8 @@ R package to support automated testing in courses.
 	install.packages("devtools")
 	devtools::install_github("UofTChem-Teaching/testthatChem")
 	
-#### *If you are using Jupyter Notebook, sometimes you need to use the following command to install packages.
-        install.packages("devtools", dependencies = TRUE)	
+#### *If you are using Jupyter Notebook, sometimes you need to use the following command to install packages
+	install.packages("devtools", dependencies = TRUE)	
 #### *When prompt: "Enter one or more numbers, or an empty line to skip updates:" Please input **1** for All
 
 
